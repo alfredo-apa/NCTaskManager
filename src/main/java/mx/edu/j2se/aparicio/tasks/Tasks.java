@@ -1,6 +1,6 @@
 package mx.edu.j2se.aparicio.tasks;
 
-public class tasks {
+public class Tasks {
 
     int origin_time = 0; // TODO: 10/11/2021 Use in next version.
     String taskTitle;
@@ -8,32 +8,32 @@ public class tasks {
     boolean active = false;
 
     /**
-     * Creates a non repetitive task, 
+     * Creates a non repetitive task,
      * asking for its title and starting
      * time as parameters.
-     * 
+     *
      * The title must be introduced as a
      * String, if there are other values,
      * the given title will take them as
      * a String.
-     * 
-     * The given time must be introduced 
-     * as an integer (int), representing 
-     * the hours from the zero hour to 
-     * the assigned hour given to the 
+     *
+     * The given time must be introduced
+     * as an integer (int), representing
+     * the hours from the zero hour to
+     * the assigned hour given to the
      * task.
-     * 
+     *
      * @param title
      * @param time
      */
-    tasks(String title, int time){
+    Tasks(String title, int time){
         taskTitle = title;
         startTime = time;
     }
     /**
-     * Creates a repetitive task, asking 
+     * Creates a repetitive task, asking
      * for its title, starting and ending
-     * time, and the interval between 
+     * time, and the interval between
      * instances as parameters.
      *
      * The title must be introduced as a
@@ -41,24 +41,24 @@ public class tasks {
      * the given title will take them as
      * a String.
      *
-     * The given time must be introduced 
-     * as an integer (int), representing 
-     * the hours from the zero hour to 
-     * the assigned starting or ending 
+     * The given time must be introduced
+     * as an integer (int), representing
+     * the hours from the zero hour to
+     * the assigned starting or ending
      * hour given to the task.
      *
-     * The given interval must be 
-     * introduced as an integer (int), 
-     * representing the number of hours 
-     * between each of the instances of 
+     * The given interval must be
+     * introduced as an integer (int),
+     * representing the number of hours
+     * between each of the instances of
      * the task.
-     * 
+     *
      * @param title
      * @param start
-     * @param end 
-     * @param interval 
+     * @param end
+     * @param interval
      */
-    tasks(String title, int start, int end, int interval){
+    Tasks(String title, int start, int end, int interval){
         taskTitle = title;
         startTime = start;
         endTime = end;
@@ -67,13 +67,13 @@ public class tasks {
     /**
      * Verifies and returns the title
      * of the active task.
-     * 
+     *
      * @return
      */
     String getTitle(){
         String title = taskTitle;
 
-        // TODO: 10/11/2021 Use in next version 
+        // TODO: 10/11/2021 Use in next version
         /*if (!this.isActive())
             title = "No active task";*/
 
@@ -82,12 +82,12 @@ public class tasks {
     /**
      *Changes the title of the
      *current task.
-     * 
+     *
      *The title must be given as
-     *a String, any other value 
-     * will be considered as a 
+     *a String, any other value
+     * will be considered as a
      * String.
-     *  
+     *
      * @param title
      */
     void setTitle(String title){
@@ -97,7 +97,7 @@ public class tasks {
      * Verifies if the current
      * task is active, returning
      * a boolean as a result.
-     * 
+     *
      * @return
      */
     boolean isActive(){
@@ -106,15 +106,15 @@ public class tasks {
     /**
      *Changes the active state
      * of the current task.
-     * 
+     *
      * Receives a boolean or in
      * some cases the parameter
      * could be replaced with 1
-     * (true / active) or 0 
+     * (true / active) or 0
      * (false / not active)
-     * 
+     *
      * @param flag
-     */ // TODO: 10/11/2021 Verify if boolean in java accepts 1/0 as parameters. 
+     */ // TODO: 10/11/2021 Verify if boolean in java accepts 1/0 as parameters.
     void setActive(boolean flag){
         active = flag;
     }
@@ -185,7 +185,7 @@ public class tasks {
      * that the task is
      * non repetitive, the function
      * will return a 404 value.
-     * 
+     *
      * @return
      */ // TODO: 12/11/2021 Change the last part after completing the objective of the to do inside this function.
     int getEndTime(){
@@ -193,7 +193,7 @@ public class tasks {
         if(!this.isRepeated()){
             time = endTime;
         }else{
-            time = 404; // TODO: 12/11/2021 Verify variable to change joke for something relevant. 
+            time = 404; // TODO: 12/11/2021 Verify variable to change joke for something relevant.
         }
         return time;
     }
@@ -291,17 +291,15 @@ public class tasks {
      */
     int nextTimeAfter(int current){
         int next = 0;
-        
+
         if(active == true && this.isRepeated()){
             if(current > startTime && current < endTime) {
                 int i = startTime;
-                boolean flag = false;
-                
-                while(flag == false){
+
+                while(i<current){
                     i =+ taskInterval;
                     if (i>current){
                         next = i;
-                        flag = true;
                     }
                 }
             }else{
@@ -310,7 +308,7 @@ public class tasks {
         }else{
             next = -1;
         }
-        
+
         return next;
     }
 
