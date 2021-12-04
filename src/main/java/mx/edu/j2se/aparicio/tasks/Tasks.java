@@ -26,9 +26,17 @@ public class Tasks {
      * @param title
      * @param time
      */
-    Tasks(String title, int time){
-        taskTitle = title;
-        startTime = time;
+    Tasks(String title, int time) throws Exception{
+        if (time < 0){
+            throw new Exception(
+                "El valor de la(s) hora(s) no puede ser negativo." +
+                        "\nThe hour value cannot be negative."
+            );
+        }else{
+            taskTitle = title;
+            startTime = time;
+        }
+
     }
     /**
      * Creates a repetitive task, asking
@@ -58,11 +66,23 @@ public class Tasks {
      * @param end
      * @param interval
      */
-    Tasks(String title, int start, int end, int interval){
-        taskTitle = title;
-        startTime = start;
-        endTime = end;
-        taskInterval = interval;
+    Tasks(String title, int start, int end, int interval) throws Exception{
+        if (start < 0 || end < start || interval < 0){
+            throw new Exception(
+                    "El valor de la(s) hora(s) no puede ser negativo." +
+                            "\nThe hour value cannot be negative."
+            );
+        }else if(end == start || interval == 0) {
+            throw new Exception(
+                    "Los valores introducidos no corresponden a una tarea repetitiva." +
+                            "\nThe given values are not the ones needed for a repetitive task."
+            );
+        }else{
+            taskTitle = title;
+            startTime = start;
+            endTime = end;
+            taskInterval = interval;
+        }
     }
     /**
      * Verifies and returns the title
@@ -292,7 +312,7 @@ public class Tasks {
     int nextTimeAfter(int current){
         int next = 0;
 
-        if(active == true && this.isRepeated()){
+        if(active == true){
             if(current > startTime && current < endTime) {
                 int i = startTime;
 
@@ -302,6 +322,8 @@ public class Tasks {
                         next = i;
                     }
                 }
+            }else if (current < startTime) {
+                next = startTime;
             }else{
                 next = -1;
             }
@@ -311,6 +333,10 @@ public class Tasks {
 
         return next;
     }
-
+    void setTime(int start, int end, int interval){
+        startTime = start;
+        endTime = end;
+        taskInterval = interval;
+    }
 
 }

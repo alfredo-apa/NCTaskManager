@@ -55,18 +55,22 @@ public class ArrayTaskList {
         boolean flag = false;
         int index = 0;
 
-        if(this.size()==1){
-            arrayTask = null;
-            flag = true;
-        }else{
-            while(flag == false){
-                if (task.equals(arrayTask[index])){
-                    flag = true;
-                    this.changeSize(1, index);
-                }else{
-                    index++;
+        try {
+            if (this.size() == 1 && task.equals(arrayTask[0])) {
+                arrayTask = null;
+                flag = true;
+            } else {
+                while (flag == false) {
+                    if (task.equals(arrayTask[index])) {
+                        flag = true;
+                        this.changeSize(1, index);
+                    } else {
+                        index++;
+                    }
                 }
             }
+        }catch (Exception e){
+
         }
         return flag;
     }
