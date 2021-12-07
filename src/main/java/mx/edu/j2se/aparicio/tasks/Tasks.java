@@ -152,7 +152,7 @@ public class Tasks {
      *
      * @return
      */
-    int getTime(int current){
+    int getTime(int current) throws Exception {
         int time = 0;
         if(this.isRepeated()){
             time = this.nextTimeAfter(current);
@@ -204,16 +204,21 @@ public class Tasks {
      * current task. In the case
      * that the task is
      * non repetitive, the function
-     * will return a 404 value.
+     * will return a 404 value and
+     * an Exception, specifying that
+     * the task is non repetitive.
      *
      * @return
-     */ // TODO: 12/11/2021 Change the last part after completing the objective of the to do inside this function.
-    int getEndTime(){
+     */
+    int getEndTime() throws Exception{
         int time = 0;
         if(!this.isRepeated()){
             time = endTime;
         }else{
-            time = 404; // TODO: 12/11/2021 Verify variable to change joke for something relevant.
+            time = 404;
+            throw new Exception(
+                    "The chosen task is non repetitive."
+            );
         }
         return time;
     }
@@ -222,14 +227,24 @@ public class Tasks {
      * the current task, if
      * the task is a non
      * repetitive this method
-     * will return the default
-     * value of the interval
-     * (-1).
+     * will return a 404 value
+     * and an Exception,
+     * specifying that the task
+     * is non repetitive.
      *
      * @return
      */
-    int getRepeatInterval(){
-        return taskInterval;
+    int getRepeatInterval() throws Exception{
+        int t = 0;
+        if(taskInterval == -1){
+            t = 404;
+            throw new Exception(
+                    "The chosen task is non repetitive."
+            );
+        }else{
+            t = taskInterval;
+        }
+        return t;
     }
     /**
      * Changes the interval of
@@ -252,17 +267,29 @@ public class Tasks {
      * @param end
      * @param interval
      */
-    void setInterval(int start, int end, int interval){
+    void setInterval(int start, int end, int interval) throws Exception{
 
         if (this.isRepeated()){
-            startTime = start;
-
-            if (interval < (end - start)){
-                endTime = end;
-                taskInterval = interval;
+            if (start < 0 || end < start || interval < 0){
+                throw new Exception(
+                        "El valor de la(s) hora(s) no puede ser negativo." +
+                                "\nThe hour value cannot be negative."
+                );
+            }else if(end == start || interval == 0) {
+                throw new Exception(
+                        "Los valores introducidos no corresponden a una tarea repetitiva." +
+                                "\nThe given values are not the ones needed for a repetitive task."
+                );
             }else {
-                endTime = end;
-                taskInterval = end - start;
+                startTime = start;
+
+                if (interval < (end - start)) {
+                    endTime = end;
+                    taskInterval = interval;
+                } else {
+                    endTime = end;
+                    taskInterval = end - start;
+                }
             }
         }
     }
@@ -309,7 +336,7 @@ public class Tasks {
      * @param current
      * @return
      */
-    int nextTimeAfter(int current){
+    int nextTimeAfter(int current) throws Exception{
         int next = 0;
 
         if(active == true){
@@ -329,6 +356,11 @@ public class Tasks {
             }
         }else{
             next = -1;
+        }
+        if (next == -1){
+            throw new Exception(
+                    "Something went wrong. :("
+            );
         }
 
         return next;

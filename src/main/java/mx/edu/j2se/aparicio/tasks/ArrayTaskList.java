@@ -69,10 +69,11 @@ public class ArrayTaskList {
                     }
                 }
             }
+            return flag;
         }catch (Exception e){
-
+            throw e;
         }
-        return flag;
+
     }
     /**
      * Returns the size of
@@ -96,9 +97,15 @@ public class ArrayTaskList {
      * @param index
      * @return
      */
-    Tasks getTask(int index){
+    Tasks getTask(int index) throws Exception{
+        try {
+            return arrayTask[index];
+        }catch (Exception e){
+            throw new Exception(
+                    "Non Existing Index."
+            );
+        }
 
-        return arrayTask[index];
     }
 
     /**
@@ -120,7 +127,8 @@ public class ArrayTaskList {
      * @param to
      * @return
      */
-    ArrayTaskList incoming(int from, int to){
+    ArrayTaskList incoming(int from, int to) throws Exception {
+
         ArrayTaskList a = new ArrayTaskList();
         if (to>from) {
             for (Tasks t : this.arrayTask) {
@@ -128,6 +136,10 @@ public class ArrayTaskList {
                     a.add(t);
                 }
             }
+        }else{
+            throw new Exception(
+                    "The time values are valid."
+            );
         }
 
         return a;
